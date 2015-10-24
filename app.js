@@ -1,32 +1,36 @@
 var myApp = angular.module('myApp', ['ngMessages', 'ngResource']); 
-// this second parameter is an array of dependencies. it's where we'll list the angular-messages dependency. We found the 'ngMessages' name by going to https://code.angularjs.org/1.4.7/angular-messages.js and looking at the comments. ngMessages does things like provide form validation. so now we'll grab some of the sample code from the link above and put it in our mainController section and add some bootstrap to it too.
-// next we'll add minifed version of ngResource: https://code.angularjs.org/1.4.7/angular-resource.min.js.
-// by the way, if we forget to include the script tag for this in our html file, we'll get an error in the console that starts with this: Uncaught Error: [$injector:modulerr] 
-// these dependencies are called modules or services
-// you can go out and find these other modules or services online and add them to your code
 
-myApp.controller('mainController', function($log, $scope, $filter, $resource) {
+// this time we'll use the second way of doing dependncy injection in angular using an array. 
+// so this...
+/*
+myApp.controller('mainController', ['$scope', '$log', function($scope, $log) {
     
-    $log.log("Hello");
-    $log.info("This is some information");
-    $log.warn("Warning!");
-    $log.debug("Some debug information while writing my code");
-    $log.error("This was an error!!");
+    $log.info($scope);
     
-    $scope.name = 'John';
-    $scope.formattedname = $filter('uppercase')($scope.name);
+}]);
+*/
+// ...becomes this:
+myApp.controller("mainController",["$scope","$log",function(o,n){n.info(o)}]);
+// a minifier is never going to touch the contents of a string so $scope and $log are retained.
+// so angular now references the positions of the items in the array up to the function and then replaces each parameter in the function with the item at that position in the array.
+// so NOW, the order of the parameters does matter if they don't match up to the order of the items in the array prior to the function.
+
+// there is a second way to do dependency injection in angular that was created just because of the problem below that happens when your code is minified.
+
+// from this point forward in the course, we're going to use this new method of dependency injection.
+
+
+
+// by minifying our code, we get some thing like what's below. Really good minifiers replace variable names with much shorter variable names. However, this causes a problem for angular because it is looking for specific things like $scope and $log in this case. Since it doesn't find anything, you get an injector error: Error: [$injector:unpr]
+
+/*
+myApp.controller('mainController', function($scope, $log) {
     
-    $log.info($scope.name);
-    $log.info($scope.formattedname);
-    
-    console.log($resource);
+    $log.info($scope);
     
 });
 
+becomes:
 
-// both $scope and $log were injected into the controller because they were named properly
-// it doesn't matter in what order we pass the $ parameters. So you could do $log, $scope or $scope, $log
-
-//&log is a safer, easier way to log to the console.
-
-// there are other services too. if you go here https://code.angularjs.org/1.4.7/, you see more than just an angular.js file. for instance, there is an angular-messages.js file. we'll add a reference to this file in our HTML file after our angular.js reference. (We'll use the minified version)
+var myApp=angular.module("myApp",["ngMessages","ngResource"]);myApp.controller("mainController",function(n,o){o.info(n)});
+*/
