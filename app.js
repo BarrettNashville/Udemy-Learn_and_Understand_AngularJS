@@ -1,31 +1,32 @@
-var myApp = angular.module('myApp', []); 
+var myApp = angular.module('myApp', ['ngMessages', 'ngResource']); 
+// this second parameter is an array of dependencies. it's where we'll list the angular-messages dependency. We found the 'ngMessages' name by going to https://code.angularjs.org/1.4.7/angular-messages.js and looking at the comments. ngMessages does things like provide form validation. so now we'll grab some of the sample code from the link above and put it in our mainController section and add some bootstrap to it too.
+// next we'll add minifed version of ngResource: https://code.angularjs.org/1.4.7/angular-resource.min.js.
+// by the way, if we forget to include the script tag for this in our html file, we'll get an error in the console that starts with this: Uncaught Error: [$injector:modulerr] 
+// these dependencies are called modules or services
+// you can go out and find these other modules or services online and add them to your code
 
-myApp.controller('mainController', function($scope) {
+myApp.controller('mainController', function($log, $scope, $filter, $resource) {
     
-    console.log($scope);
-    // this $scope object was created and passed to the controller function because angular *looked at the controller function*, parsed out what its parameters were and realized, hey, one of those is $scope. so i'm going to create $scope and pass it to the function. This is extremely powerful. This means that all you have to do is put the name of the variable correctly in your function and you'll get it. $scope is a service that is a part of the core angular modules but there are others. they also can get passed to your function simply by putting them in the list. This makes our code more testable, verifiable, and stable.
+    $log.log("Hello");
+    $log.info("This is some information");
+    $log.warn("Warning!");
+    $log.debug("Some debug information while writing my code");
+    $log.error("This was an error!!");
+    
+    $scope.name = 'John';
+    $scope.formattedname = $filter('uppercase')($scope.name);
+    
+    $log.info($scope.name);
+    $log.info($scope.formattedname);
+    
+    console.log($resource);
     
 });
 
-//my note: so what if we log the controller function?
-console.log(angular.injector().annotate(myApp.controller)); 
-// empty array?
 
-var searchPeople = function searchPeople(firstName, lastName, height, age, occupation) {
-    return 'Jane Doe';
-}
+// both $scope and $log were injected into the controller because they were named properly
+// it doesn't matter in what order we pass the $ parameters. So you could do $log, $scope or $scope, $log
 
-// this feature inside angular, you can pass it a function and it will parse that string and create an array of each parameter that function expects. So....
-console.log(angular.injector().annotate(searchPeople));
+//&log is a safer, easier way to log to the console.
 
-//... if you change one of the parameters to $scope, angular could find it
-var searchPeople2 = function searchPeople2($scope, lastName, height, age, occupation) {
-    return 'Jane Doe';
-}
-
-console.log(angular.injector().annotate(searchPeople2));
-
-// you could put $scope wherever you wanted in the function parameters and angular would still find it. 
-// when angular finds a parameter it recognizes like $scope, it says ok, i'll pass the object i create to that spot in the function. so above, we'll console.log($scope)
-
-
+// there are other services too. if you go here https://code.angularjs.org/1.4.7/, you see more than just an angular.js file. for instance, there is an angular-messages.js file. we'll add a reference to this file in our HTML file after our angular.js reference. (We'll use the minified version)
