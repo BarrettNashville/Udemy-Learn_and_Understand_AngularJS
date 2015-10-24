@@ -1,23 +1,20 @@
-var myApp = angular.module('myApp', []); // takes the name of your app and an array of dependencies
+var myApp = angular.module('myApp', []); 
 
 myApp.controller('mainController', function($scope) {
     
-    // we can add properties and functions to the $scope
-    $scope.name = 'Jane Doe';
-    $scope.occupation = 'Coder';
     
-    $scope.getname = function() {
-        return 'John Doe';
-    }
-    
-    $scope.getname();
-    
-    console.log($scope);
     
 });
 
-// $scope is a way of doing dependency injection in angular
+var searchPeople = function searchPeople(firstName, lastName, height, age, occupation) {
+    return 'Jane Doe';
+}
 
-// the $scope becomes the middle piece between the view and the controller. 
 
-// the $scope defines that data that goes back and forth between the function above and what appears in the HTML in the mainController section
+console.log(searchPeople);
+
+var searchPeopleString = searchPeople.toString();
+console.log(searchPeopleString);
+
+// these are examples of taking a function in javascript and coverting it to a string
+// because of this, you could do some fancy coding to parse the string and figure out what the names of the parameters are to the function, so I can then make a decision based upon what I see and that's exactly what Angular does.
