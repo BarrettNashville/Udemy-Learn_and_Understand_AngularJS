@@ -1,36 +1,20 @@
 var myApp = angular.module('myApp', ['ngMessages', 'ngResource']); 
 
-// this time we'll use the second way of doing dependncy injection in angular using an array. 
-// so this...
-/*
-myApp.controller('mainController', ['$scope', '$log', function($scope, $log) {
+myApp.controller('mainController', ['$scope', '$timeout',function($scope, $timeout) {
     
-    $log.info($scope);
+    $scope.name = 'Barrett';
+    // whatever is sitting inside the scope becomes available inside the view, inside the html that's attached to the controller
+    // $scope is the glue that connects the controllers code with the view
+    // whatever you put in the $scope is available in the view
+    // in the view, you don't have to use $scope.name, just name. its assumed that it is inside the $scope object
+    // this all happens on the client side. the html is downloaded as is, and then angular updated the values in the memory of the browser.
+    // once that memory in the browser is updated, the screen gets repainted/updated
     
+    // now lets add a timeout function
+    // the interesting thing is that we're just changing the value of a variable that's sitting inside the scope. We're not updating any html.
+    // I don't have to worry about updating my view, i just update my data and my view goes along for the ride. 
+    $timeout(function(){
+        $scope.name = 'Everybody';
+    }, 3000)
 }]);
-*/
-// ...becomes this:
-myApp.controller("mainController",["$scope","$log",function(o,n){n.info(o)}]);
-// a minifier is never going to touch the contents of a string so $scope and $log are retained.
-// so angular now references the positions of the items in the array up to the function and then replaces each parameter in the function with the item at that position in the array.
-// so NOW, the order of the parameters does matter if they don't match up to the order of the items in the array prior to the function.
 
-// there is a second way to do dependency injection in angular that was created just because of the problem below that happens when your code is minified.
-
-// from this point forward in the course, we're going to use this new method of dependency injection.
-
-
-
-// by minifying our code, we get some thing like what's below. Really good minifiers replace variable names with much shorter variable names. However, this causes a problem for angular because it is looking for specific things like $scope and $log in this case. Since it doesn't find anything, you get an injector error: Error: [$injector:unpr]
-
-/*
-myApp.controller('mainController', function($scope, $log) {
-    
-    $log.info($scope);
-    
-});
-
-becomes:
-
-var myApp=angular.module("myApp",["ngMessages","ngResource"]);myApp.controller("mainController",function(n,o){o.info(n)});
-*/

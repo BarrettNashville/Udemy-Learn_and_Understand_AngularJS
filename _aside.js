@@ -1,12 +1,5 @@
-var things = 
-    [1,
-     '2',
-     function() {
-         alert("Hello!");
-     }
-    ];
+/* interpolation: create a string by combining strings and placeholders
 
-// arrays can hold anything including functions, and those functions can be called by indexing into that array and calling the function like so:
-things[2]();
+'My name is' + name is interpolated and the result is 'My name is Barrett'
 
-console.log(things);
+*/
