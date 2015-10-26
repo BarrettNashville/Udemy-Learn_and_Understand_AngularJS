@@ -1,14 +1,14 @@
-// Directive: an instruction to angular to manipulate a piece of the DOM. This could be 'add a class', 'hide this', 'create this', etc
+window.onload = doIt;
 
-var myApp = angular.module('myApp', []); 
+function doIt(){
+    var tb = document.getElementById("name");
 
-myApp.controller('mainController', ['$scope', '$filter', function($scope, $filter) {
+    tb.addEventListener("keypress",
+        function(event){
+        console.log("Pressed!");
+    });
+}
 
-    $scope.handle = '';
-    
-    $scope.lowercasehandle = function() {
-        return $filter('lowercase')($scope.handle);
-    }
-    
-}]);
-
+// events get thrown all the time, you just have to be listening for them
+// with jQuery, you are manually attaching code to those events
+// angular takes advantage of those events to take care of things for you
