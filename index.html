@@ -43,12 +43,62 @@
                 <div>
                     <label>What is your twitter handle?</label>
                     <input type="text" ng-model="handle"/>
+                </div>                
+                
+                <div class="alert" ng-class="{ 'alert-warning': handle.length < characters, 'alert-danger': handle.length > characters }" ng-show="handle.length !== characters">
+                    
+                    <!--
+                    Must be 5 characters!
+                    <p>This &lt;div&gt; will have a different class if characters &lt; 5.</p>
+                    <p>It uses the ng-class directive which takes an object with the name in quotes being the class to add and the value being the javascript expression to test. If true the class is added. You can have multiple name/value pairs. </p><br>
+                    -->
+                    <div ng-show="handle.length < characters">
+                        You have less than 5 characters!
+                        <p>You can nest &lt;div&gt;s within &lt;div&gt;s that have directives.</p>
+                    </div>
+                    
+                    <div ng-show="handle.length > characters">
+                        You have more than 5 characters!
+                        <p>You can nest &lt;div&gt;s within &lt;div&gt;s that have directives.</p>
+                    </div>
+                    
                 </div>
+                
+                <!--
+                <div class="alert" ng-if="handle.length !== characters">
+                    
+                    Must be 5 characters!
+                    <p>This &lt;div&gt; will actually be removed by angular from the DOM.</p>
+                    
+                </div>
+                
+                <div class="alert" ng-show="handle.length !== characters">
+                    
+                    Must be 5 characters!
+                    <p>This &lt;div&gt; will just be hidden by angular from the HTML DOM by replacing its class.</p>
+                    
+                </div>
+
+                <div class="alert" ng-hide="handle.length === characters">
+                    
+                    Must be 5 characters!
+                    <p>This &lt;div&gt; is similar to above but uses ng-hide instead of ng-show.</p>
+                    
+                </div>     
+                -->
                 
                 <hr />
                 
-                <h1>twitter.com/{{ handle }}</h1>
                 <h1>twitter.com/{{ lowercasehandle() }}</h1>
+                
+                <h3>Rules</h3>
+                <h4><i>Here we use the ng-repeat directive with an array we created in the scope.</i></h4>
+                
+                <ul>
+                    <li ng-repeat="rule in rules">
+                        {{ rule.rulename }}
+                    </li>
+                </ul>
                 
             </div>
 
