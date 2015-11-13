@@ -40,11 +40,13 @@
 
             <div ng-controller="mainController">
                 
-                <input type="button" value="Click me" ng-click="alertClick()" />
+                <h1>{{ name }}</h1>
                 
-                <br />
+            </div>
+            
+            <div ng-controller="secondController">
                 
-                <div ng-cloak>{{ name }} <br />This &lt;div&gt; uses ng-cloak which hides this element in the DOM until angular has worked on it. This prevents the two curly braces followed by the name of the scope variable and the two closing curly braces from showing up briefly on slow computers.<br><br>Additional information on the various directives available can be found in the Angular API Reference. </div>
+                <h3>{{ name }}</h3>
                 
             </div>
 
