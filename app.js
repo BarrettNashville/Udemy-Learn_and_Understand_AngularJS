@@ -12,21 +12,27 @@ myApp.config(function($routeProvider) {
     .when('/second', {
         templateUrl: 'pages/second.html',
         controller: 'secondController'
-    });
+    })
+    
+    // pattern matching using the colon and the name of the parameter. this can be access through $routeParams
+    // this means url/second no long works, only something like url/something/3
+    // now we'll add url/second above and give num a default value below
+    .when('/second/:num', {
+        templateUrl: 'pages/second.html',
+        controller: 'secondController'
+    })
     
 });
 
-myApp.controller('mainController', ['$scope', '$location', '$log', function($scope, $location, $log) {
-    // angular has a built-in hash tracking utility using $location
-    //$log.info($location.path());
-    
+myApp.controller('mainController', ['$scope', '$log', function($scope, $location, $log) {
+
     $scope.name = 'Main';
     
 }]);
 
 
-myApp.controller('secondController', ['$scope', '$location', '$log', function($scope, $location, $log) {
+myApp.controller('secondController', ['$scope', '$log', '$routeParams', function($scope, $log, $routeParams) {
     
-    $scope.name = 'Second';
+    $scope.num = $routeParams.num || 1;
     
 }]);
