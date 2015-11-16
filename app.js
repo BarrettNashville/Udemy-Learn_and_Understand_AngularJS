@@ -1,3 +1,5 @@
+// a service is a singleton object that will contain properties and methods
+
 var myApp = angular.module('myApp', ['ngRoute']); 
 
 myApp.config(function($routeProvider) {
@@ -22,24 +24,47 @@ myApp.config(function($routeProvider) {
 });
 
 
-// scope is not a singleton, but log and routeParams are
-// for instance the log object has the main and second properties when you navigate to the two pages below
-
-myApp.controller('mainController', ['$scope', '$log', function($scope, $log) {
-
-    $scope.name = 'Main';
+myApp.service('nameService', function() {
+   
+    var self = this;
     
-    $log.main = 'Property from main';
-    $log.log($log);
+    this.name = 'John Doe';
+    
+    this.namelength = function() {
+      
+            return self.name.length;
+        
+    };
+    
+});
+
+myApp.controller('mainController', ['$scope', '$log', 'nameService', function($scope, $log, nameService) {
+
+    $scope.name = nameService.name;
+    
+    // angular doesn't automatically update the nameService.name value so we have to add a watch.
+    $scope.$watch('name', function() {
+        
+       nameService.name = $scope.name;
+        
+    });
+    
+    $log.log(nameService.name);
+    $log.log(nameService.namelength());
     
 }]);
 
 
-myApp.controller('secondController', ['$scope', '$log', '$routeParams', function($scope, $log, $routeParams) {
+myApp.controller('secondController', ['$scope', '$log', '$routeParams', 'nameService', function($scope, $log, $routeParams, nameService) {
     
     $scope.num = $routeParams.num || 1;
     
-    $log.second = 'Property from second';
-    $log.log($log);
+    $scope.name = nameService.name;
+    
+    $scope.$watch('name', function() {
+        
+       nameService.name = $scope.name;
+        
+    });    
     
 }]);
