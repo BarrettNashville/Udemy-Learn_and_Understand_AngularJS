@@ -14,9 +14,6 @@ myApp.config(function($routeProvider) {
         controller: 'secondController'
     })
     
-    // pattern matching using the colon and the name of the parameter. this can be access through $routeParams
-    // this means url/second no long works, only something like url/something/3
-    // now we'll add url/second above and give num a default value below
     .when('/second/:num', {
         templateUrl: 'pages/second.html',
         controller: 'secondController'
@@ -24,9 +21,16 @@ myApp.config(function($routeProvider) {
     
 });
 
-myApp.controller('mainController', ['$scope', '$log', function($scope, $location, $log) {
+
+// scope is not a singleton, but log and routeParams are
+// for instance the log object has the main and second properties when you navigate to the two pages below
+
+myApp.controller('mainController', ['$scope', '$log', function($scope, $log) {
 
     $scope.name = 'Main';
+    
+    $log.main = 'Property from main';
+    $log.log($log);
     
 }]);
 
@@ -34,5 +38,8 @@ myApp.controller('mainController', ['$scope', '$log', function($scope, $location
 myApp.controller('secondController', ['$scope', '$log', '$routeParams', function($scope, $log, $routeParams) {
     
     $scope.num = $routeParams.num || 1;
+    
+    $log.second = 'Property from second';
+    $log.log($log);
     
 }]);
