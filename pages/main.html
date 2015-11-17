@@ -1,3 +1,13 @@
-<h1>This is main.</h1>
-<hr />
-<input type="text" ng-model="name" />
+<label>Search</label>
+<input type="text" value="Doe" />
+
+<h3>Search Results</h3>
+<div class="list-group">
+    <!-- two default ways to call custom attributes (you can restrict which one works using 'restrict' in the directive definition): 
+    <search-result></search-result>
+    <div search-result></div>
+    -->
+    <!-- two additional (non-default) ways you can call directives -->
+    <div class="search-result"></div>
+    <!-- directive: search-result -->
+</div>

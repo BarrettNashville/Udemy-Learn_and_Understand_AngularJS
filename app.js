@@ -24,47 +24,24 @@ myApp.config(function($routeProvider) {
 });
 
 
-myApp.service('nameService', function() {
-   
-    var self = this;
-    
-    this.name = 'John Doe';
-    
-    this.namelength = function() {
-      
-            return self.name.length;
-        
-    };
-    
-});
-
 myApp.controller('mainController', ['$scope', '$log', 'nameService', function($scope, $log, nameService) {
 
-    $scope.name = nameService.name;
-    
-    // angular doesn't automatically update the nameService.name value so we have to add a watch.
-    $scope.$watch('name', function() {
-        
-       nameService.name = $scope.name;
-        
-    });
-    
-    $log.log(nameService.name);
-    $log.log(nameService.namelength());
     
 }]);
 
 
 myApp.controller('secondController', ['$scope', '$log', '$routeParams', 'nameService', function($scope, $log, $routeParams, nameService) {
     
-    $scope.num = $routeParams.num || 1;
     
-    $scope.name = nameService.name;
-    
-    $scope.$watch('name', function() {
-        
-       nameService.name = $scope.name;
-        
-    });    
     
 }]);
+
+myApp.directive("searchResult", function() {
+    //the html below came from the Bootstrap website: http://getbootstrap.com/components/#list-group-custom-content
+   return {
+       restrict: 'A, E, C, M', // A for Attribute E for Element (A, E is default). C is for Class, M is for coMment
+       template: '<a href="#" class="list-group-item"><h4 class="list-group-item-heading">Doe, John</h4><p class="list-group-item-text">555 Main St., New York, NY 11111</p></a>',
+       // this setting will replace the <search-result> element in the html
+       replace: true
+   } 
+});
