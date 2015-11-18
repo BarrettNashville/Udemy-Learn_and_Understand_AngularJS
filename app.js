@@ -40,7 +40,8 @@ myApp.directive("searchResult", function() {
     //the html below came from the Bootstrap website: http://getbootstrap.com/components/#list-group-custom-content
    return {
        restrict: 'A, E, C, M', // A for Attribute E for Element (A, E is default). C is for Class, M is for coMment
-       template: '<a href="#" class="list-group-item"><h4 class="list-group-item-heading">Doe, John</h4><p class="list-group-item-text">555 Main St., New York, NY 11111</p></a>',
+       // instead of using template: we can use templateUrl: and reference another html file
+       templateUrl: 'directives/searchresult.html' ,
        // this setting will replace the <search-result> element in the html
        replace: true
    } 
