@@ -1,5 +1,3 @@
-// a service is a singleton object that will contain properties and methods
-
 var myApp = angular.module('myApp', ['ngRoute']); 
 
 myApp.config(function($routeProvider) {
@@ -41,21 +39,17 @@ myApp.controller('secondController', ['$scope', '$log', '$routeParams', 'nameSer
 }]);
 
 myApp.directive("searchResult", function() {
-    // the model for this directive is the same as the model for the controller its used within
-    // in other words, a directive is able to access its parent scope by default
-    // this can be dangerous for a directive used across many pages
-    // because of this problem, angular provides "isolated scope" for directives
-    // to do this, we add another property called scope to the directive
-    // if we have things in the parent scope we need to access in the isolated scope,
-    // we can use three special symbols
    return {
-       restrict: 'A, E, C, M', // A for Attribute E for Element (A, E is default). C is for Class, M is for coMment
+       restrict: 'A, E, C, M', 
        templateUrl: 'directives/searchresult.html' ,
        replace: true ,
        scope: {
-            personName: "@" , // the @ sign means "text"
-            // could also do personNameSpecial: "@personName" if you want to grab the value and put it in a property
-            personAddress: "@"
+           // the = sign tells us this is a two-way binding and we are passing an object into the directive, not text like with the @ sign
+           // this can cause problems if you're trying to do too much to the passed in objects. 
+           // you can find yourself updating data that causes the part of the HTML that contains the directive to reload, so the directive reloads. 
+           // just be very cautious of how you use directives
+           // be wary of having the directive do too much to the scope being passed in
+            personObject: "=" 
        }
    } 
 });
