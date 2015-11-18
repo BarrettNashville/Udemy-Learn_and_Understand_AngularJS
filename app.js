@@ -73,42 +73,19 @@ myApp.directive("searchResult", function() {
            formattedAddressFunction: "&"
        },
        
-       // you would use compile when you have complex code to use
-       // he thinks compile should be initialize and post should be onbind since it doesn't actually compile and link
-       // you'll almost never have to run code inside compile, only in post.
-       // because of this, angular provides a shortcut (next video)
-       compile: function(elem, attrs) {
-           
-           console.log('Compiling...');
-          
-           console.log(elem);
-           
-           return {
-               
-               /* bad idea to use pre-link per angular documentation. use post-link instead
-               pre: function(scope, elements, attrs) {
+       // link: is the same as post: in the compile,post setup from the previous video
+       link: function(scope, elements, attrs) {
                    
-                   console.log('Pre-linking...');
-                   console.log(elements);
-                   
-               },
-               */
-               
-               
-               post: function(scope, elements, attrs) {
-                   
-                   console.log('Post-linking...');
-                   
-                   if(scope.personObject.name === 'Jane Doe') {
-                       elements.removeAttr('class');
-                   }
-                   
-                   console.log(elements);
-                   
+               console.log('Linking...');
+
+               if(scope.personObject.name === 'Jane Doe') {
+                   elements.removeAttr('class');
                }
+
+               console.log(elements);
+                   
+        }
                
-           }
-           
-       }
-   } 
+    }
+       
 });
