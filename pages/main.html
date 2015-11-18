@@ -3,11 +3,5 @@
 
 <h3>Search Results</h3>
 <div class="list-group">
-    <!-- two default ways to call custom attributes (you can restrict which one works using 'restrict' in the directive definition): 
-    <search-result></search-result>
-    <div search-result></div>
-    -->
-    <!-- two additional (non-default) ways you can call directives -->
-    <div class="search-result"></div>
-    <!-- directive: search-result -->
+    <search-result person-name="{{ person.name }}" person-address="{{ person.address }}"></search-result>
 </div>

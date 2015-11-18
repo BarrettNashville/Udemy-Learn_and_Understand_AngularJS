@@ -24,8 +24,12 @@ myApp.config(function($routeProvider) {
 });
 
 
-myApp.controller('mainController', ['$scope', '$log', 'nameService', function($scope, $log, nameService) {
+myApp.controller('mainController', ['$scope', '$log', function($scope, $log) {
 
+    $scope.person = {
+        name: 'John Doe',
+        address: '555 Main St., New York, NY 11111'
+    }
     
 }]);
 
@@ -37,12 +41,21 @@ myApp.controller('secondController', ['$scope', '$log', '$routeParams', 'nameSer
 }]);
 
 myApp.directive("searchResult", function() {
-    //the html below came from the Bootstrap website: http://getbootstrap.com/components/#list-group-custom-content
+    // the model for this directive is the same as the model for the controller its used within
+    // in other words, a directive is able to access its parent scope by default
+    // this can be dangerous for a directive used across many pages
+    // because of this problem, angular provides "isolated scope" for directives
+    // to do this, we add another property called scope to the directive
+    // if we have things in the parent scope we need to access in the isolated scope,
+    // we can use three special symbols
    return {
        restrict: 'A, E, C, M', // A for Attribute E for Element (A, E is default). C is for Class, M is for coMment
-       // instead of using template: we can use templateUrl: and reference another html file
        templateUrl: 'directives/searchresult.html' ,
-       // this setting will replace the <search-result> element in the html
-       replace: true
+       replace: true ,
+       scope: {
+            personName: "@" , // the @ sign means "text"
+            // could also do personNameSpecial: "@personName" if you want to grab the value and put it in a property
+            personAddress: "@"
+       }
    } 
 });
