@@ -57,7 +57,7 @@ myApp.controller('mainController', ['$scope', '$log', function($scope, $log) {
 }]);
 
 
-myApp.controller('secondController', ['$scope', '$log', '$routeParams', 'nameService', function($scope, $log, $routeParams, nameService) {
+myApp.controller('secondController', ['$scope', '$log', '$routeParams', function($scope, $log, $routeParams) {
     
     
     
@@ -72,20 +72,9 @@ myApp.directive("searchResult", function() {
            personObject: "=" ,
            formattedAddressFunction: "&"
        },
-       
-       // link: is the same as post: in the compile,post setup from the previous video
-       link: function(scope, elements, attrs) {
-                   
-               console.log('Linking...');
-
-               if(scope.personObject.name === 'Jane Doe') {
-                   elements.removeAttr('class');
-               }
-
-               console.log(elements);
-                   
-        }
-               
+       transclude: true
     }
        
 });
+
+// transclusion: including one document in another. you place a copy of one document at a particular point inside another. 

@@ -3,4 +3,8 @@
     <!-- the next line has a mapping object that matches the name of the parameter to the value -->
     <p class="list-group-item-text">{{ formattedAddressFunction({ aperson: personObject }) }}
     </p>
+    <!-- can also use ng-transclude as an attribute on small instead of as a separate element. this prevents ng-transclude tag from showing in DOM-->
+    <small>
+        <ng-transclude></ng-transclude>
+    </small>
 </a>
